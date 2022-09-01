@@ -11,19 +11,22 @@ class Solution(object):
         aux = lst
 
         while list1 and list2:
-            if list1.val >= list2.val:
-                aux.next = list2
-                list2 = list2.next
-            else:
+
+            if list1.val < list2.val:
                 aux.next = list1
                 list1 = list1.next
-
-            aux = aux.next
-
-            if list1:
-                aux.next = list1
-            elif list2:
+                aux = aux.next
+            else:
                 aux.next = list2
+                list2 = list2.next
+                aux = aux.next
+
+        aux = aux.next
+
+        if list1:
+            aux.next = list1
+        elif list2:
+            aux.next = list2
 
         return lst
 
