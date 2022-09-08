@@ -1,49 +1,35 @@
-from turtle import right
-
-
 class Solution(object):
-    def __init__(self) -> None:
-        x = input("length = ")
-        lst = []
-        for i in range(int(x)):
-            lst.append(int(input()))
-        target = int(input("target = "))
-        self.searchInsert(lst, target)
-
     def searchInsert(self, nums, target):
+        return self.searchInsert_(nums, target, 0)
+
+    def searchInsert_(self, nums, target, idx):
         if len(nums) == 0:
-            return 0
+            return idx
+
         if len(nums) == 1:
+            if nums[0] == target or target < nums[0]:
+                return idx
+            else:
+                return idx+1
+
+        if len(nums) == 2:
             if nums[0] == target:
-                return 0
+                return idx
+            elif nums[1] == target:
+                return idx+1
+            elif target < nums[0]:
+                return idx
+            elif target > nums[1]:
+                return idx+2
             else:
-                return 0 if nums[0] > target else 1
+                return idx+1
 
-        aux = nums
-        index = 0
-        while True:
+        mid = len(nums) // 2
 
-            if len(aux) == 2:
-                break
-
-            half = len(aux)//2
-            left = aux[:half]
-            right = aux[half:]
-
-            if target >= right[0]:
-                index += len(left)
-                aux = right
-
-            elif target <= left[(half - 1)]:
-                aux = left
-            else:
-                return (index + len(left))
-
-        if nums[index] == target:
-            return index
+        if target <= nums[mid]:
+            return self.searchInsert_(nums[0:mid], target, idx)
         else:
-            print(index if nums[index] > target else (index + 1))
-            return (index) if nums[index] > target else (index + 1)
+            return self.searchInsert_(nums[mid:], target, idx+mid)
 
 
-Solution()
+print(Solution().searchInsert([1, 3, 4, 6], 5))
