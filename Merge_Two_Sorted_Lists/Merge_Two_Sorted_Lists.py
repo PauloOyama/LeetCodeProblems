@@ -29,6 +29,3 @@ class Solution(object):
             aux.next = list2
 
         return lst
-
-
-print(Solution().mergeTwoLists([1, 2, 3], [1, 3, 4]))
